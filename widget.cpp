@@ -29,8 +29,8 @@ Widget::Widget(QWidget *parent) : QWidget(parent),
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setFixedSize(418,270);
 
-    this->setWindowTitle(Config::title);
-    this->ui->label_update->setText(Config::title);
+    this->setWindowTitle(tr("快通流量查询工具 ")+Config::title);
+    this->ui->label_update->setText(tr("快通流量查询工具 ")+Config::title);
 
     show_login=new login();
 
