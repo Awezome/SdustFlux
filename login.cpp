@@ -13,7 +13,7 @@ login::login(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowOpacity(1);
-    this->setWindowFlags(Qt::FramelessWindowHint|Qt::Popup|Qt::Tool);
+    this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setFixedSize(337,319);
 
