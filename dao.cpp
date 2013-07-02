@@ -17,6 +17,7 @@ void dao::slotPassport() {
     setBean();
     emit signalFlag();
     if(iFlagBean.link){
+        qDebug()<<1111;
         setFluxSlot("user");        
     }
 }
@@ -91,7 +92,6 @@ void dao::setBean(){
                             else if(xml->name() == "PeriodStartDate")  userBean.periodStartDate=QDateTime::fromString(xml->readElementText(), Qt::ISODate);
                         }
                        iUserBean = userBean;
-                      // qDebug()<<iUserBean.realName;
                     }
                 }
             }else if(xml->name() == "CurrentMonthFluxResult"){

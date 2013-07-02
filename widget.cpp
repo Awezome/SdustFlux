@@ -58,8 +58,6 @@ void Widget::mouseMoveEvent(QMouseEvent * event){
 }
 
 void Widget::slotFlag(){
-    qDebug()<<"~~~"<<a->getFlag().flag;
-
     if(a->getFlag().link){
         if(a->getFlag().flag){
             this->show();
@@ -181,14 +179,16 @@ void Widget::slotMonth(){
     int flux_used=a->getMonth().used;
 
     int fluxRemainder=flux_total-flux_used;
-
+    ui->label_passper_val->setText(QString("%1").arg(a->getUser().pricePerMB)+tr("元/MB"));
+    int pass=0;
     QString flux_shengyu=tr("剩余");
     if(fluxRemainder<0){
         ui->label_remainder->setText(tr("超出："));
         fluxRemainder=-fluxRemainder;
         flux_shengyu=tr("超出");
+        pass=fluxRemainder;
     }
-
+    ui->label_passsum_val->setText(QString("%1").arg(pass*a->getUser().pricePerMB)+tr("元"));
     ui->label_remainder_val->setText(QString::number((double)(fluxRemainder)/(double)1024,'d',2)+tr("G"));
     ui->label_flux_val->setText(tr("已用")+QString::number(flux_used)+tr("MB"));
     ui->label_flux_val_2->setText(flux_shengyu+QString::number(fluxRemainder)+tr("MB"));
