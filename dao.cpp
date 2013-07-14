@@ -57,7 +57,7 @@ void dao::slotFluxDay() {
     for(int i=1;i<iDayBean.length();i++){
         qDebug()<<iDayBean[i].logDate;
         qDebug()<<iDayBean[i].downloadFlux;
-       qDebug()<<iDayBean[i].totalFlux;
+        qDebug()<<iDayBean[i].totalFlux;
     }
 
     emit signalDay();
@@ -77,14 +77,14 @@ void dao::setBean(){
         QXmlStreamReader *xml = new QXmlStreamReader(message.toXmlString());
 
         while (!xml->atEnd()){
-            xml->readNext();
+            xml->readNextStartElement();
             if(xml->name() == "GetUserInfoResult"){
                 while (!xml->atEnd()){
-                    xml->readNext();
+                    xml->readNextStartElement();
                     if( xml->name() == "UserInfo") {
                         UserBean userBean;
                         while(!xml->atEnd()) {
-                            xml->readNext();
+                            xml->readNextStartElement();
                             if(xml->name() == "Account")       userBean.account=xml->readElementText();
                             else if(xml->name() == "RealName") userBean.realName=xml->readElementText();
                             else if(xml->name() == "GroupName")  userBean.groupName=xml->readElementText();
@@ -105,7 +105,7 @@ void dao::setBean(){
                 int i = 0;
                 int temp[3];
                 while(!xml->atEnd()){
-                    xml->readNext();
+                    xml->readNextStartElement();
                     if(xml->name()=="int") temp[i++] = xml->readElementText().toInt();
                 }
                 iMonthBean.total=temp[0];
@@ -115,7 +115,7 @@ void dao::setBean(){
             }else if(xml->name() == "GetDayFluxResult"){
                 iDayBean.clear();
                 while(!xml->atEnd()){
-                    xml->readNext();
+                    xml->readNextStartElement();
                     if(xml->name() == "BillInfo") {
                         DayBean dayBean;
                         while(!xml->atEnd()) {
@@ -132,11 +132,11 @@ void dao::setBean(){
                 }
             }else if(xml->name() == "GetBillInfoResult"){
                 while(!xml->atEnd()) {
-                    xml->readNext();
+                    xml->readNextStartElement();
                     if( xml->name() == "BillInfo"){
                         DayBean dayBean;
                         while(!xml->atEnd()) {
-                            xml->readNext();
+                            xml->readNextStartElement();
                             if(xml->name() == "LogDate") dayBean.logDate = xml->readElementText();
                             else if(xml->name() == "TotalFlux") dayBean.totalFlux = xml->readElementText().toFloat();
                             else if(xml->name() == "DownloadFlux") dayBean.downloadFlux = xml->readElementText().toFloat();
@@ -149,7 +149,7 @@ void dao::setBean(){
             }else if(xml->name() == "GetPassportResult"){
                 ipassport=xml->readElementText();
                 while(!xml->atEnd()) {
-                    xml->readNext();
+                    xml->readNextStartElement();
                     if(xml->name() == "Flag") iFlagBean.flag=xml->readElementText().toUpper()== "TRUE"? true : false;
                     else if(xml->name() == "Errmessage") iFlagBean.message = xml->readElementText();
                     else if(xml->name() == "URL") iFlagBean.url = xml->readElementText();
