@@ -15,22 +15,21 @@ SOURCES += main.cpp\
         widget.cpp \
     login.cpp \
     aboutpass.cpp \
-    aboutflux.cpp \
     dao.cpp \
-    config.cpp
+    config.cpp \
+    plotter.cpp
 
 HEADERS  += widget.h \
     login.h \
     aboutpass.h \
-    aboutflux.h \
     dao.h \
     bean.h \
-    config.h
+    config.h \
+    plotter.h
 
 FORMS    += widget.ui \
     login.ui \
-    aboutpass.ui \
-    aboutflux.ui
+    aboutpass.ui
 RC_FILE = icon.rc
 
 RESOURCES += \

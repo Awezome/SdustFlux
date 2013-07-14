@@ -17,7 +17,6 @@ void dao::slotPassport() {
     setBean();
     emit signalFlag();
     if(iFlagBean.link){
-        qDebug()<<1111;
         setFluxSlot("user");        
     }
 }
@@ -70,14 +69,14 @@ void dao::setBean(){
         QXmlStreamReader *xml = new QXmlStreamReader(message.toXmlString());
 
         while (!xml->atEnd()){
-            xml->readNext();
+            xml->readNextStartElement();
             if(xml->name() == "GetUserInfoResult"){
                 while (!xml->atEnd()){
-                    xml->readNext();
+                    xml->readNextStartElement();
                     if( xml->name() == "UserInfo") {
                         UserBean userBean;
                         while(!xml->atEnd()) {
-                            xml->readNext();
+                            xml->readNextStartElement();
                             if(xml->name() == "Account")       userBean.account=xml->readElementText();
                             else if(xml->name() == "RealName") userBean.realName=xml->readElementText();
                             else if(xml->name() == "GroupName")  userBean.groupName=xml->readElementText();
@@ -98,7 +97,7 @@ void dao::setBean(){
                 int i = 0;
                 int temp[3];
                 while(!xml->atEnd()){
-                    xml->readNext();
+                    xml->readNextStartElement();
                     if(xml->name()=="int") temp[i++] = xml->readElementText().toInt();
                 }
                 iMonthBean.total=temp[0];
@@ -106,14 +105,30 @@ void dao::setBean(){
                 iMonthBean.download=temp[2];
                // qDebug()<<iMonthBean.download;
             }else if(xml->name() == "GetDayFluxResult"){
-
-            }else if(xml->name() == "GetBillInfoResult"){
-                while(!xml->atEnd()) {
-                    xml->readNext();
-                    if( xml->name() == "BillInfo") {
+                iDayBean.clear();
+                while(!xml->atEnd()){
+                    xml->readNextStartElement();
+                    if(xml->name() == "BillInfo") {
                         DayBean dayBean;
                         while(!xml->atEnd()) {
-                            xml->readNext();
+                            xml->readNextStartElement();
+                            if(xml->name() == "LogDate") dayBean.logDate = xml->readElementText();
+                            else if(xml->name() == "TotalFlux") dayBean.totalFlux = xml->readElementText().toFloat();
+                            else if(xml->name() == "DownloadFlux") dayBean.downloadFlux = xml->readElementText().toFloat();
+                            if(dayBean.downloadFlux!=0){
+                                iDayBean.append(dayBean);
+                                dayBean.downloadFlux=0;
+                            }
+                        }
+                    }
+                }
+            }else if(xml->name() == "GetBillInfoResult"){
+                while(!xml->atEnd()) {
+                    xml->readNextStartElement();
+                    if( xml->name() == "BillInfo"){
+                        DayBean dayBean;
+                        while(!xml->atEnd()) {
+                            xml->readNextStartElement();
                             if(xml->name() == "LogDate") dayBean.logDate = xml->readElementText();
                             else if(xml->name() == "TotalFlux") dayBean.totalFlux = xml->readElementText().toFloat();
                             else if(xml->name() == "DownloadFlux") dayBean.downloadFlux = xml->readElementText().toFloat();
@@ -121,13 +136,12 @@ void dao::setBean(){
                         iDayBean.append(dayBean);
                     }
                 }
-                //qDebug()<<iDayBean[0].downloadFlux;
             }else if(xml->name() == "GetChargeInfoResult"){
 
             }else if(xml->name() == "GetPassportResult"){
                 ipassport=xml->readElementText();
                 while(!xml->atEnd()) {
-                    xml->readNext();
+                    xml->readNextStartElement();
                     if(xml->name() == "Flag") iFlagBean.flag=xml->readElementText().toUpper()== "TRUE"? true : false;
                     else if(xml->name() == "Errmessage") iFlagBean.message = xml->readElementText();
                     else if(xml->name() == "URL") iFlagBean.url = xml->readElementText();

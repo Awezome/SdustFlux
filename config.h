@@ -8,6 +8,8 @@ class Config{
     static QString ver;
     static QString title;
     static QString file;
+    static QString homepage;
+    static QString changelog;
 };
 
 #endif

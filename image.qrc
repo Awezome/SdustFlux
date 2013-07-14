@@ -6,5 +6,6 @@
         <file>image/delete.png</file>
         <file>image/repeat.png</file>
         <file>image/plane.png</file>
+        <file>image/node.png</file>
     </qresource>
 </RCC>

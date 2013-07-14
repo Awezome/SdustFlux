@@ -8,6 +8,7 @@
 #include <QMenu>
 #include "dao.h"
 #include "config.h"
+#include "plotter.h"
 
 namespace Ui {
     class Widget;
@@ -26,7 +27,6 @@ protected:
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
 private slots:
-    void slotAbout();
     void slotQuit();
     void slotLogout();
 
@@ -37,6 +37,10 @@ private slots:
     void slotBill();
     void slotMonth();
     void slotFlag();
+
+    void slotFluxDay();
+    void slotChangelog();
+    void slotHomepage();
 private:
     dao *a;
 
@@ -49,6 +53,7 @@ private:
 
     void delLoginFile();
 
+    Plotter *plotter;
     QMenu *trayMenu;
     void Tray_Menu();
 };

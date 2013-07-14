@@ -6,9 +6,8 @@
 #include <QProcess>
 #include <QDir>
 #include <QNetworkReply>
+#include <QDesktopServices>
 #include "dao.h"
-#include "aboutflux.h"
-
 
 Widget::Widget(QWidget *parent) : QWidget(parent),
     ui(new Ui::Widget)
@@ -86,16 +85,21 @@ void Widget::face_creat(){
     a->setAccount(name,pass);
 }
 
-void Widget::slotAbout()
-{
-    AboutFlux *show_aboutflux=new AboutFlux(this);
-    show_aboutflux->show();
+void Widget::slotFluxDay(){
+    plotter->show();
 }
 
-void Widget::slotQuit()
-{
+void Widget::slotQuit(){
     this->close();
     QApplication::quit();
+}
+
+void Widget::slotHomepage(){
+    QDesktopServices::openUrl(QUrl(Config::homepage));
+}
+
+void Widget::slotChangelog(){
+    QDesktopServices::openUrl(QUrl(Config::changelog));
 }
 
 void Widget::getUpdate(){
@@ -139,9 +143,9 @@ void Widget::slotLogout(){
 }
 
 void Widget::Tray_Menu(){
-    QAction *Tray_about = new QAction("关于", this);
-    Tray_about->setIcon(QIcon(":/image/image/checkmark.png"));
-    connect(Tray_about, SIGNAL(triggered(bool)), this, SLOT(slotAbout()));
+    QAction *Tray_flux_day = new QAction("月流量", this);
+    //Tray_flux_day->setIcon(QIcon(":/image/image/checkmark.png"));
+    connect(Tray_flux_day, SIGNAL(triggered(bool)), this, SLOT(slotFluxDay()));
 
     QAction *Tray_logout = new QAction("注销", this);
     Tray_logout->setIcon(QIcon(":/image/image/repeat.png"));
@@ -151,10 +155,20 @@ void Widget::Tray_Menu(){
     Tray_quit->setIcon(QIcon(":/image/image/delete.png"));
     connect(Tray_quit, SIGNAL(triggered(bool)), this, SLOT(slotQuit()));
 
+    QAction *Tray_homepage = new QAction("官方主页", this);
+    //Tray_flux_day->setIcon(QIcon(":/image/image/checkmark.png"));
+    connect(Tray_homepage, SIGNAL(triggered(bool)), this, SLOT(slotHomepage()));
+
+    QAction *Tray_changelog = new QAction("更新日志", this);
+    connect(Tray_changelog, SIGNAL(triggered(bool)), this, SLOT(slotChangelog()));
+
     trayMenu = new QMenu(this);//创建菜单
+    trayMenu->addAction(Tray_flux_day);
+    trayMenu->addSeparator();
+    trayMenu->addAction(Tray_homepage);
+    trayMenu->addAction(Tray_changelog);
+    trayMenu->addSeparator();
     trayMenu->addAction(Tray_logout);
-    trayMenu->addSeparator();//分隔符
-    trayMenu->addAction(Tray_about);
     trayMenu->addAction(Tray_quit);
 }
 
@@ -169,7 +183,26 @@ void Widget::slotUser(){
     ui->label_group_val->setText(a->getUser().groupName);
 }
 void Widget::slotDay(){
+    QStringList annotateList;
+    annotateList << QObject::tr("时间") << QObject::tr("流量");
+    QStringList timeList;
 
+    int begin=1;
+    int getDayLength=a->getDay().length();
+    for(int i=begin;i<getDayLength;i++){
+        timeList.append(a->getDay().at(i).logDate);
+    }
+
+    int maxtemp=0;
+    QList<double> valueList;
+    for(int i=begin;i<getDayLength;i++){
+        float aaa=a->getDay().at(i).totalFlux;
+        valueList<<aaa;
+        if(maxtemp<aaa)
+            maxtemp=aaa;
+    }
+
+    plotter=new Plotter(maxtemp, 0, timeList, annotateList, valueList);
 }
 void Widget::slotBill(){
 
