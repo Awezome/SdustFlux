@@ -8,8 +8,6 @@
 #include <QNetworkReply>
 #include "dao.h"
 #include "aboutflux.h"
-#include "plotter.h"
-
 
 Widget::Widget(QWidget *parent) : QWidget(parent),
     ui(new Ui::Widget)
@@ -93,6 +91,11 @@ void Widget::slotAbout()
     show_aboutflux->show();
 }
 
+void Widget::slotFluxDay()
+{
+    plotter->show();
+}
+
 void Widget::slotQuit()
 {
     this->close();
@@ -140,6 +143,10 @@ void Widget::slotLogout(){
 }
 
 void Widget::Tray_Menu(){
+    QAction *Tray_flux_day = new QAction("月流量", this);
+    //Tray_flux_day->setIcon(QIcon(":/image/image/checkmark.png"));
+    connect(Tray_flux_day, SIGNAL(triggered(bool)), this, SLOT(slotFluxDay()));
+
     QAction *Tray_about = new QAction("关于", this);
     Tray_about->setIcon(QIcon(":/image/image/checkmark.png"));
     connect(Tray_about, SIGNAL(triggered(bool)), this, SLOT(slotAbout()));
@@ -153,8 +160,10 @@ void Widget::Tray_Menu(){
     connect(Tray_quit, SIGNAL(triggered(bool)), this, SLOT(slotQuit()));
 
     trayMenu = new QMenu(this);//创建菜单
+    trayMenu->addAction(Tray_flux_day);
+    trayMenu->addSeparator();
     trayMenu->addAction(Tray_logout);
-    trayMenu->addSeparator();//分隔符
+    trayMenu->addSeparator();
     trayMenu->addAction(Tray_about);
     trayMenu->addAction(Tray_quit);
 }
@@ -179,17 +188,20 @@ void Widget::slotDay(){
         timeList.append(a->getDay().at(i).logDate);
     }
 
+    //int temp=0;
     int maxtemp=0;
     QList<double> valueList;
     for(int i=begin;i<a->getDay().length();i++){
-        float aaa=a->getDay().at(i).downloadFlux;
+        float aaa=a->getDay().at(i).totalFlux;
         valueList<<aaa;
         if(maxtemp<aaa)
             maxtemp=aaa;
+        //temp+=aaa;
     }
+    //qDebug()<<temp;
 
-    Plotter *plotter=new Plotter(maxtemp, 0, timeList, annotateList, valueList);
-    plotter->show();
+    plotter=new Plotter(maxtemp, 0, timeList, annotateList, valueList);
+    //plotter->show();
 }
 void Widget::slotBill(){
 

@@ -8,6 +8,7 @@
 #include <QMenu>
 #include "dao.h"
 #include "config.h"
+#include "plotter.h"
 
 namespace Ui {
     class Widget;
@@ -37,6 +38,8 @@ private slots:
     void slotBill();
     void slotMonth();
     void slotFlag();
+
+    void slotFluxDay();
 private:
     dao *a;
 
@@ -49,6 +52,7 @@ private:
 
     void delLoginFile();
 
+    Plotter *plotter;
     QMenu *trayMenu;
     void Tray_Menu();
 };
