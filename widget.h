@@ -40,6 +40,8 @@ private slots:
     void slotFlag();
 
     void slotFluxDay();
+    void slotChangelog();
+    void slotHomepage();
 private:
     dao *a;
 

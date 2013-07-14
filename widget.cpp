@@ -6,6 +6,7 @@
 #include <QProcess>
 #include <QDir>
 #include <QNetworkReply>
+#include <QDesktopServices>
 #include "dao.h"
 #include "aboutflux.h"
 
@@ -85,21 +86,26 @@ void Widget::face_creat(){
     a->setAccount(name,pass);
 }
 
-void Widget::slotAbout()
-{
+void Widget::slotAbout(){
     AboutFlux *show_aboutflux=new AboutFlux(this);
     show_aboutflux->show();
 }
 
-void Widget::slotFluxDay()
-{
+void Widget::slotFluxDay(){
     plotter->show();
 }
 
-void Widget::slotQuit()
-{
+void Widget::slotQuit(){
     this->close();
     QApplication::quit();
+}
+
+void Widget::slotHomepage(){
+    QDesktopServices::openUrl(QUrl(Config::homepage));
+}
+
+void Widget::slotChangelog(){
+    QDesktopServices::openUrl(QUrl(Config::changelog));
 }
 
 void Widget::getUpdate(){
@@ -159,12 +165,21 @@ void Widget::Tray_Menu(){
     Tray_quit->setIcon(QIcon(":/image/image/delete.png"));
     connect(Tray_quit, SIGNAL(triggered(bool)), this, SLOT(slotQuit()));
 
+    QAction *Tray_homepage = new QAction("官方主页", this);
+    //Tray_flux_day->setIcon(QIcon(":/image/image/checkmark.png"));
+    connect(Tray_homepage, SIGNAL(triggered(bool)), this, SLOT(slotHomepage()));
+
+    QAction *Tray_changelog = new QAction("更新日志", this);
+    connect(Tray_changelog, SIGNAL(triggered(bool)), this, SLOT(slotChangelog()));
+
     trayMenu = new QMenu(this);//创建菜单
     trayMenu->addAction(Tray_flux_day);
     trayMenu->addSeparator();
-    trayMenu->addAction(Tray_logout);
-    trayMenu->addSeparator();
+    trayMenu->addAction(Tray_homepage);
+    trayMenu->addAction(Tray_changelog);
     trayMenu->addAction(Tray_about);
+    trayMenu->addSeparator();
+    trayMenu->addAction(Tray_logout);
     trayMenu->addAction(Tray_quit);
 }
 
