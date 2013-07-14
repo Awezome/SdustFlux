@@ -53,6 +53,13 @@ void dao::slotFluxMonth() {
 
 void dao::slotFluxDay() {
     setBean();
+
+    for(int i=1;i<iDayBean.length();i++){
+        qDebug()<<iDayBean[i].logDate;
+        qDebug()<<iDayBean[i].downloadFlux;
+       qDebug()<<iDayBean[i].totalFlux;
+    }
+
     emit signalDay();
     //setFluxSlot("bill");
 }
@@ -106,11 +113,27 @@ void dao::setBean(){
                 iMonthBean.download=temp[2];
                // qDebug()<<iMonthBean.download;
             }else if(xml->name() == "GetDayFluxResult"){
-
+                iDayBean.clear();
+                while(!xml->atEnd()){
+                    xml->readNext();
+                    if(xml->name() == "BillInfo") {
+                        DayBean dayBean;
+                        while(!xml->atEnd()) {
+                            xml->readNextStartElement();
+                            if(xml->name() == "LogDate") dayBean.logDate = xml->readElementText();
+                            else if(xml->name() == "TotalFlux") dayBean.totalFlux = xml->readElementText().toFloat();
+                            else if(xml->name() == "DownloadFlux") dayBean.downloadFlux = xml->readElementText().toFloat();
+                            if(dayBean.downloadFlux!=0){
+                                iDayBean.append(dayBean);
+                                dayBean.downloadFlux=0;
+                            }
+                        }
+                    }
+                }
             }else if(xml->name() == "GetBillInfoResult"){
                 while(!xml->atEnd()) {
                     xml->readNext();
-                    if( xml->name() == "BillInfo") {
+                    if( xml->name() == "BillInfo"){
                         DayBean dayBean;
                         while(!xml->atEnd()) {
                             xml->readNext();
@@ -121,7 +144,6 @@ void dao::setBean(){
                         iDayBean.append(dayBean);
                     }
                 }
-                //qDebug()<<iDayBean[0].downloadFlux;
             }else if(xml->name() == "GetChargeInfoResult"){
 
             }else if(xml->name() == "GetPassportResult"){
