@@ -8,7 +8,6 @@
 #include <QNetworkReply>
 #include <QDesktopServices>
 #include "dao.h"
-#include "aboutflux.h"
 
 Widget::Widget(QWidget *parent) : QWidget(parent),
     ui(new Ui::Widget)
@@ -86,11 +85,6 @@ void Widget::face_creat(){
     a->setAccount(name,pass);
 }
 
-void Widget::slotAbout(){
-    AboutFlux *show_aboutflux=new AboutFlux(this);
-    show_aboutflux->show();
-}
-
 void Widget::slotFluxDay(){
     plotter->show();
 }
@@ -153,10 +147,6 @@ void Widget::Tray_Menu(){
     //Tray_flux_day->setIcon(QIcon(":/image/image/checkmark.png"));
     connect(Tray_flux_day, SIGNAL(triggered(bool)), this, SLOT(slotFluxDay()));
 
-    QAction *Tray_about = new QAction("关于", this);
-    Tray_about->setIcon(QIcon(":/image/image/checkmark.png"));
-    connect(Tray_about, SIGNAL(triggered(bool)), this, SLOT(slotAbout()));
-
     QAction *Tray_logout = new QAction("注销", this);
     Tray_logout->setIcon(QIcon(":/image/image/repeat.png"));
     connect(Tray_logout, SIGNAL(triggered(bool)), this, SLOT(slotLogout()));
@@ -177,7 +167,6 @@ void Widget::Tray_Menu(){
     trayMenu->addSeparator();
     trayMenu->addAction(Tray_homepage);
     trayMenu->addAction(Tray_changelog);
-    trayMenu->addAction(Tray_about);
     trayMenu->addSeparator();
     trayMenu->addAction(Tray_logout);
     trayMenu->addAction(Tray_quit);

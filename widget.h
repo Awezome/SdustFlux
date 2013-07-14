@@ -27,7 +27,6 @@ protected:
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
 private slots:
-    void slotAbout();
     void slotQuit();
     void slotLogout();
 
