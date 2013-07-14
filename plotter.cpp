@@ -198,7 +198,7 @@ void Plotter::drawLine(const QPoint &prePoint, const QPoint &curPoint,
 
     QPen oldPen = painter->pen();
     painter->setPen(oldPen);
-    painter->drawPixmap(x2 - 4, y2 - 5, QPixmap(tr(":/images/node.png")));
+    painter->drawPixmap(x2 - 4, y2 - 5, QPixmap(":/image/image/node.png"));
 }
 
 void Plotter::resizeEvent(QResizeEvent * /*event*/)
