@@ -17,7 +17,6 @@ void dao::slotPassport() {
     setBean();
     emit signalFlag();
     if(iFlagBean.link){
-        qDebug()<<1111;
         setFluxSlot("user");        
     }
 }
@@ -53,13 +52,6 @@ void dao::slotFluxMonth() {
 
 void dao::slotFluxDay() {
     setBean();
-
-    for(int i=1;i<iDayBean.length();i++){
-        qDebug()<<iDayBean[i].logDate;
-        qDebug()<<iDayBean[i].downloadFlux;
-        qDebug()<<iDayBean[i].totalFlux;
-    }
-
     emit signalDay();
     //setFluxSlot("bill");
 }

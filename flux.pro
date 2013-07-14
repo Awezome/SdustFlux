@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     aboutpass.cpp \
     aboutflux.cpp \
     dao.cpp \
-    config.cpp
+    config.cpp \
+    plotter.cpp
 
 HEADERS  += widget.h \
     login.h \
@@ -25,7 +26,8 @@ HEADERS  += widget.h \
     aboutflux.h \
     dao.h \
     bean.h \
-    config.h
+    config.h \
+    plotter.h
 
 FORMS    += widget.ui \
     login.ui \

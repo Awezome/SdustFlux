@@ -8,6 +8,7 @@
 #include <QNetworkReply>
 #include "dao.h"
 #include "aboutflux.h"
+#include "plotter.h"
 
 
 Widget::Widget(QWidget *parent) : QWidget(parent),
@@ -169,7 +170,26 @@ void Widget::slotUser(){
     ui->label_group_val->setText(a->getUser().groupName);
 }
 void Widget::slotDay(){
+    QStringList annotateList;
+    annotateList << QObject::tr("时间") << QObject::tr("流量");
+    QStringList timeList;
 
+    int begin=1;
+    for(int i=begin;i<a->getDay().length();i++){
+        timeList.append(a->getDay().at(i).logDate);
+    }
+
+    int maxtemp=0;
+    QList<double> valueList;
+    for(int i=begin;i<a->getDay().length();i++){
+        float aaa=a->getDay().at(i).downloadFlux;
+        valueList<<aaa;
+        if(maxtemp<aaa)
+            maxtemp=aaa;
+    }
+
+    Plotter *plotter=new Plotter(maxtemp, 0, timeList, annotateList, valueList);
+    plotter->show();
 }
 void Widget::slotBill(){
 
