@@ -184,24 +184,21 @@ void Widget::slotDay(){
     QStringList timeList;
 
     int begin=1;
-    for(int i=begin;i<a->getDay().length();i++){
+    int getDayLength=a->getDay().length();
+    for(int i=begin;i<getDayLength;i++){
         timeList.append(a->getDay().at(i).logDate);
     }
 
-    //int temp=0;
     int maxtemp=0;
     QList<double> valueList;
-    for(int i=begin;i<a->getDay().length();i++){
+    for(int i=begin;i<getDayLength;i++){
         float aaa=a->getDay().at(i).totalFlux;
         valueList<<aaa;
         if(maxtemp<aaa)
             maxtemp=aaa;
-        //temp+=aaa;
     }
-    //qDebug()<<temp;
 
     plotter=new Plotter(maxtemp, 0, timeList, annotateList, valueList);
-    //plotter->show();
 }
 void Widget::slotBill(){
 
