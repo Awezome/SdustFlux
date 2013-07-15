@@ -4,16 +4,15 @@
 #
 #-------------------------------------------------
 
-QT       += core gui\
-        network\
-        widgets
+QT  += core gui\
+    network\
+    widgets
 
 TARGET = flux
 TEMPLATE = app
 
-include(qtsoap/qtsoap.pri)
 SOURCES += main.cpp\
-        widget.cpp \
+    widget.cpp \
     login.cpp \
     aboutpass.cpp \
     dao.cpp \
@@ -28,9 +27,14 @@ HEADERS  += widget.h \
     config.h \
     plotter.h
 
-FORMS    += widget.ui \
+FORMS += widget.ui \
     login.ui \
     aboutpass.ui
+
 RC_FILE = icon.rc
 
 RESOURCES += image.qrc
+
+CONFIG += c++11
+
+include(qtsoap/qtsoap.pri)
