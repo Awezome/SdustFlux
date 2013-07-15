@@ -62,7 +62,7 @@ void login::on_pushButton_clicked()
     QString input_name=this->ui->lineEdit_login_name->text();
     QString input_pass=this->ui->lineEdit_login_pass->text();
     if(input_name.isEmpty()||input_pass.isEmpty()){
-        QMessageBox::warning(this,tr("错误"),tr("用户名或密码不能为空!"),QMessageBox::Yes);
+        QMessageBox::warning(this,"错误","用户名或密码不能为空!",QMessageBox::Yes);
         return;
     }
     QFile file(file_name);

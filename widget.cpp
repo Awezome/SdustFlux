@@ -1,6 +1,5 @@
 #include "widget.h"
 #include "ui_widget.h"
-#include <QTextCodec>
 #include <QDebug>
 #include <QMessageBox>
 #include <QProcess>
@@ -28,8 +27,8 @@ Widget::Widget(QWidget *parent) : QWidget(parent),
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setFixedSize(418,270);
 
-    this->setWindowTitle(tr("快通流量查询工具 ")+Config::title);
-    this->ui->label_update->setText(tr("快通流量查询工具 ")+Config::title);
+    this->setWindowTitle(Config::title);
+    this->ui->label_update->setText(Config::title);
 
     show_login=new login();
 
@@ -61,11 +60,11 @@ void Widget::slotFlag(){
         if(a->getFlag().flag){
             this->show();
         }else{
-            QMessageBox::warning(this,tr("错误"),tr("用户名或名密错误!"),QMessageBox::Yes);
+            QMessageBox::warning(this,"错误","用户名或名密错误!",QMessageBox::Yes);
             show_login->show();
         }
     }else{
-        QMessageBox::warning(this,tr("错误"),tr("无法连接服务器!"),QMessageBox::Yes);
+        QMessageBox::warning(this,"错误","无法连接服务器!",QMessageBox::Yes);
     }
 }
 
@@ -103,11 +102,11 @@ void Widget::slotChangelog(){
 }
 
 void Widget::getUpdate(){
-    QNetworkAccessManager *nam = new QNetworkAccessManager(this);
+   /* QNetworkAccessManager *nam = new QNetworkAccessManager(this);
     connect(nam, SIGNAL(finished(QNetworkReply*)),this, SLOT(slotUpdate(QNetworkReply*)));
 
     QUrl url("http://192.168/flux/update.php?ver="+Config::ver);
-    QNetworkReply* reply = nam->get(QNetworkRequest(url));
+    QNetworkReply* reply = nam->get(QNetworkRequest(url));*/
     //reply->abort();
 }
 
@@ -125,7 +124,7 @@ void Widget::delLoginFile(){
     QFile file(QDir::homePath()+"/"+Config::file);
     if(file.exists()){
         if(file.remove()){
-            QMessageBox::information(this,tr("注销成功"),tr("注销成功，点击重新登录!"),QMessageBox::Yes);
+            QMessageBox::information(this,"注销成功","注销成功，点击重新登录!",QMessageBox::Yes);
             QApplication::quit();
             QProcess::startDetached(qApp->applicationFilePath(), QStringList());
         }
