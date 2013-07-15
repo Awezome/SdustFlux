@@ -16,8 +16,8 @@ void dao::setAccount(QString account, QString password){
 void dao::slotPassport() {
     setBean();
     emit signalFlag();
-    if(iFlagBean.link){
-        setFluxSlot("user");        
+    if(iFlagBean.link && iFlagBean.flag){
+        setFluxSlot("user");
     }
 }
 
