@@ -78,7 +78,7 @@ void Widget::face_creat(){
 
     QString name,pass;
     QDataStream in(&file);
-    in.setVersion(QDataStream::Qt_4_8);
+    in.setVersion(QDataStream::Qt_5_1);
     in>>name>>pass;
 
     qDebug()<<name<<"  "<<pass;

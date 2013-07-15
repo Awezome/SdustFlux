@@ -69,7 +69,7 @@ void login::on_pushButton_clicked()
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
        return;
     QDataStream out(&file);
-    out.setVersion(QDataStream::Qt_4_8);
+    out.setVersion(QDataStream::Qt_5_1);
     out <<input_name<<input_pass;
 
     QApplication::quit();

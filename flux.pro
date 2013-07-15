@@ -5,7 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui\
-        network
+        network\
+        widgets
 
 TARGET = flux
 TEMPLATE = app
@@ -32,5 +33,4 @@ FORMS    += widget.ui \
     aboutpass.ui
 RC_FILE = icon.rc
 
-RESOURCES += \
-    image.qrc
+RESOURCES += image.qrc
