@@ -56,6 +56,11 @@ void dao::slotFluxMonth() {
 void dao::slotFluxDay() {
     setBean();
     emit signalDay();
+
+    for(int i=0;i<iDayBeanTotal.length();i++){
+        qDebug()<<i<<": "<<iDayBeanTotal.at(i);
+    }
+
     //setFluxSlot("bill");
 }
 
@@ -115,16 +120,20 @@ void dao::setBean(){
                         DayBean dayBean;
                         while(!xml->atEnd()) {
                             xml->readNextStartElement();
-                            if(xml->name() == "LogDate") dayBean.logDate = xml->readElementText();
+
+
+                            if(xml->name() == "TotalFlux") iDayBeanTotal.append(xml->readElementText().toFloat());
+
+                          /*  if(xml->name() == "LogDate") dayBean.logDate = xml->readElementText();
                             else if(xml->name() == "TotalFlux") dayBean.totalFlux = xml->readElementText().toFloat();
                             else if(xml->name() == "DownloadFlux") dayBean.downloadFlux = xml->readElementText().toFloat();
-
+ qDebug()<<dayBean.logDate;
                             if(dayBean.downloadFlux!=0){
                                 iDayBean.append(dayBean);
                                 dayBean.logDate.clear();
                                 dayBean.totalFlux=0;
-                                dayBean.downloadFlux=0;
-                            }
+                                dayBean.downloadFlux=0;*/
+                          //  }
                         }
                     }
                 }
@@ -195,4 +204,7 @@ MonthBean dao::getMonth(){
 }
 FlagBean dao::getFlag(){
     return iFlagBean;
+}
+QList<double> dao::getDayTotal(){
+    return iDayBeanTotal;
 }

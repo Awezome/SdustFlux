@@ -186,13 +186,15 @@ void Widget::slotDay(){
     annotateList << QObject::tr("时间") << QObject::tr("流量");
     QStringList timeList;
 
-    int getDayLength=a->getDay().length();
+
     int maxtemp=0;
-    QList<double> valueList;
+    QList<double> valueList=a->getDayTotal();
+
+    int getDayLength=valueList.length();
+
     for(int i=0;i<getDayLength;i++){
-        float aaa=a->getDay().at(i).totalFlux;
+        float aaa=valueList.at(i);
         timeList.append(QString::number(i+1));
-        valueList<<aaa;
         if(maxtemp<aaa)
             maxtemp=aaa;
     }

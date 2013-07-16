@@ -13,6 +13,8 @@ public:
     QList<BillBean> getBill();
     MonthBean getMonth();
     FlagBean getFlag();
+
+    QList<double> getDayTotal();
 signals:
     void signalUser();
     void signalDay();
@@ -29,6 +31,8 @@ private:
     QList<BillBean> iBillBean;
     MonthBean iMonthBean;
     FlagBean iFlagBean;
+
+    QList<double> iDayBeanTotal;
 
     QtSoapHttpTransport *soap;
 
