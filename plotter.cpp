@@ -9,7 +9,7 @@ Plotter::Plotter(int maximum, int minimum,
             QWidget * parent)
   : QWidget(parent), m_image(rect().width(), rect().right(), QImage::Format_RGB32)    
 {
-    this->setFixedSize(800,400);
+    this->setFixedSize(800,300);
     m_isTimeListChanged = true;
     m_maximum = maximum;
     m_minimum = minimum;
@@ -104,10 +104,10 @@ void Plotter::paintEvent(QPaintEvent * /*event*/)
     
     // 画X轴坐标值
     QFont timeFont;
-    timeFont.setPointSize(5);
+    timeFont.setPointSize(10);
     QFontMetrics timefm(timeFont);
     copyPainter.setFont(timeFont);
-    int cols = m_timeList.size();
+    int cols = m_timeList.size()-1;
     int avgPix = copyRect.width() / cols;
     int curXCoord = copyRect.x();
     int preXCoord = curXCoord;

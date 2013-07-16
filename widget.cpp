@@ -34,7 +34,7 @@ Widget::Widget(QWidget *parent) : QWidget(parent),
 
     face_creat();
     Tray_Menu();
-    //getUpdate();
+    getUpdate();
 }
 
 Widget::~Widget(){
@@ -102,11 +102,11 @@ void Widget::slotChangelog(){
 }
 
 void Widget::getUpdate(){
-   /* QNetworkAccessManager *nam = new QNetworkAccessManager(this);
+    QNetworkAccessManager *nam = new QNetworkAccessManager(this);
     connect(nam, SIGNAL(finished(QNetworkReply*)),this, SLOT(slotUpdate(QNetworkReply*)));
 
     QUrl url("http://192.168/flux/update.php?ver="+Config::ver);
-    QNetworkReply* reply = nam->get(QNetworkRequest(url));*/
+    QNetworkReply* reply = nam->get(QNetworkRequest(url));
     //reply->abort();
 }
 
@@ -186,16 +186,12 @@ void Widget::slotDay(){
     annotateList << QObject::tr("时间") << QObject::tr("流量");
     QStringList timeList;
 
-    int begin=1;
     int getDayLength=a->getDay().length();
-    for(int i=begin;i<getDayLength;i++){
-        timeList.append(a->getDay().at(i).logDate);
-    }
-
     int maxtemp=0;
     QList<double> valueList;
-    for(int i=begin;i<getDayLength;i++){
+    for(int i=0;i<getDayLength;i++){
         float aaa=a->getDay().at(i).totalFlux;
+        timeList.append(QString::number(i+1));
         valueList<<aaa;
         if(maxtemp<aaa)
             maxtemp=aaa;

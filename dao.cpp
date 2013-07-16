@@ -48,6 +48,9 @@ void dao::slotFluxMonth() {
     setBean();
     emit signalMonth();
     setFluxSlot("day");
+
+
+
 }
 
 void dao::slotFluxDay() {
@@ -115,8 +118,11 @@ void dao::setBean(){
                             if(xml->name() == "LogDate") dayBean.logDate = xml->readElementText();
                             else if(xml->name() == "TotalFlux") dayBean.totalFlux = xml->readElementText().toFloat();
                             else if(xml->name() == "DownloadFlux") dayBean.downloadFlux = xml->readElementText().toFloat();
+
                             if(dayBean.downloadFlux!=0){
                                 iDayBean.append(dayBean);
+                                dayBean.logDate.clear();
+                                dayBean.totalFlux=0;
                                 dayBean.downloadFlux=0;
                             }
                         }
