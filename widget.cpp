@@ -105,7 +105,7 @@ void Widget::getUpdate(){
     QNetworkAccessManager *nam = new QNetworkAccessManager(this);
     connect(nam, SIGNAL(finished(QNetworkReply*)),this, SLOT(slotUpdate(QNetworkReply*)));
 
-    QUrl url("http://192.168/flux/update.php?ver="+Config::ver);
+    QUrl url(Config::update);
     QNetworkReply* reply = nam->get(QNetworkRequest(url));
     //reply->abort();
 }

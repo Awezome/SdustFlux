@@ -26,13 +26,6 @@ public:
     int download;
 };
 
-class DayBean{
-public:
-    QString logDate;
-    float totalFlux;
-    float downloadFlux;
-};
-
 class BillBean{
 public:
     QDateTime billDate;

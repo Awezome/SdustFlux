@@ -10,6 +10,7 @@ class Config{
     static QString file;
     static QString homepage;
     static QString changelog;
+    static QString update;
 };
 
 #endif

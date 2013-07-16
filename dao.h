@@ -9,11 +9,9 @@ public:
     void setAccount(QString account, QString password);
 
     UserBean getUser();
-    QList<DayBean> getDay();
     QList<BillBean> getBill();
     MonthBean getMonth();
     FlagBean getFlag();
-
     QList<double> getDayTotal();
 signals:
     void signalUser();
@@ -27,7 +25,6 @@ private:
     QString ipassword;
 
     UserBean iUserBean;
-    QList<DayBean> iDayBean;
     QList<BillBean> iBillBean;
     MonthBean iMonthBean;
     FlagBean iFlagBean;
