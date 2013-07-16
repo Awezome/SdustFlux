@@ -104,7 +104,7 @@ void Plotter::paintEvent(QPaintEvent * /*event*/)
     
     // 画X轴坐标值
     QFont timeFont;
-    timeFont.setPointSize(10);
+    timeFont.setPointSize(12);
     QFontMetrics timefm(timeFont);
     copyPainter.setFont(timeFont);
     int cols = m_timeList.size()-1;
