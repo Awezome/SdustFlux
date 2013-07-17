@@ -5,7 +5,6 @@
 
 class Config{
   public:
-    static QString ver;
     static QString title;
     static QString file;
     static QString homepage;
